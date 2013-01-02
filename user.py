@@ -62,6 +62,6 @@ class User():
         ##Lets not worry about this now.
         pass
 
-    def loging(self, password):
+    def login(self, password):
         ##Lets not worry about this now.
         pass
