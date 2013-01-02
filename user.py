@@ -4,7 +4,8 @@ class User():
 
     """
     ALLOWED_ATTRS = ['name', 'user_id', 'email_id']
-    DB_TABLE = 'users'
+    # I know this is a bad desing to hard things etc. but this module is just for learning purpose now so its fine.
+    ATTRS_TO)DB_TABLE_MAP = 'users'
 
     def __init__(self, user_id=None):
     """
@@ -12,13 +13,13 @@ class User():
     Please note this user_id is internal database user_id.
     """
         self._attr_to_value = {}
-        pass
+        self._load_attrs_from_db()
 
     @static 
-    def    get_user(unique_attr, unique_attr_value):
-    """
+    def get_user(unique_attr, unique_attr_value):
+        """
         This unique attr can be email id or user id.
-    """
+        """
         ## Get user id from email id here. Handle the cases when
         # user is not found for given parameters.
 
@@ -26,9 +27,9 @@ class User():
         ## return instance of user object
         return User(user_id=user_id)
 
-    def sync_user_to_db(self, create_user=False):
+    def write_attrs_to_warehouse(self, create_user=False):
     """
-    This function syncs the user object attrs to database.
+    This function writes the user object attrs to database.
     If create_user flag is true 
     Case 1 . User does not exist in the database this method 
         should create new user in the database and set all the attributes in
@@ -58,7 +59,9 @@ class User():
         ## fill up the dict self._attr_to_value from database. 
 
     def search_user(attr_name_to_value_map, search_options):
-    ##Lets discuss about it
+        ##Lets not worry about this now.
+        pass
 
     def loging(self, password):
-    ##Lets discuss about
+        ##Lets not worry about this now.
+        pass
