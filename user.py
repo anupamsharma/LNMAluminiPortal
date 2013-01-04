@@ -1,3 +1,5 @@
+from util import ConfigReader, DBUtil
+
 class User():
     """
     This class represents a user.
@@ -5,7 +7,7 @@ class User():
     """
     ALLOWED_ATTRS = ['name', 'user_id', 'email_id']
     # I know this is a bad desing to hard things etc. but this module is just for learning purpose now so its fine.
-    ATTRS_TO)DB_TABLE_MAP = 'users'
+    ATTRS_TO_DB_TABLE_MAP = 'users'
 
     def __init__(self, user_id=None):
     """
@@ -13,8 +15,14 @@ class User():
     Please note this user_id is internal database user_id.
     """
         self._attr_to_value = {}
+        self._conn = None
         self._load_attrs_from_db()
 
+    def _get_conn(self):
+        if not self._conn:
+            self._conn = DBUtil.get_connection(ConfigReader().get_configuration(ConfigReader.CONNECTION_NAME))
+        return self._conn
+        
     @static 
     def get_user(unique_attr, unique_attr_value):
         """
