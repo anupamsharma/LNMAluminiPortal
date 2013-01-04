@@ -1,0 +1,17 @@
+{
+"production_write"  : 
+  { 
+    "host" : "localhost" ,
+    "user" : "write_user",
+    "passwd"  : "something",
+    "db" : "portal_prod",
+  },
+
+"test_write"  : 
+  { 
+    "host" : "localhost" ,
+    "user" : "write_user",
+    "passwd"  : "something_else",
+    "db" : "portal_test",
+  },
+}
