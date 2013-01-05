@@ -5,10 +5,13 @@ class User():
     This class represents a user.
 
     """
-    ALLOWED_ATTRS = ['name', 'user_id', 'email_id']
+    _ALLOWED_ATTRS = []
     # I know this is a bad desing to hard things etc. but this module is just for learning purpose now so its fine.
-    ATTRS_TO_DB_TABLE_MAP = 'users'
-
+    _USER_ATTRIBUTES_TO_DB_TABLE_TABLE_NAME = 'userAttributeToDBTable'
+    _USER_ATTRIBUTES_TO_DB_TABLE = {}
+    _USER_ATTRIBUTES_TO_DB_TABLE_QUERY = "Select AttributeName, TableName FROM %s "
+    _CONN = None
+    
     def __init__(self, user_id=None):
     """
         If you want to create a new user supply None as user_id.
@@ -18,12 +21,31 @@ class User():
         self._conn = None
         self._load_attrs_from_db()
 
+    # Ideally we should be asking for a database connection from a pool.
+    @staticmethod
     def _get_conn(self):
-        if not self._conn:
-            self._conn = DBUtil.get_connection(ConfigReader().get_configuration(ConfigReader.CONNECTION_NAME))
-        return self._conn
+        if not User._CONN:
+            User._CONN = DBUtil.get_connection(ConfigReader().get_configuration(ConfigReader.CONNECTION_NAME))
+        return User._CONN
+    
+    @staticmethod
+    def get_valid_attrs():
+        if not User._ALLOWED_ATTRS:
+            User._ALLOWED_ATTRS = User.get_attrs_to_table_name_map().keys()
+        return User._ALLOWED_ATTRS
         
-    @static 
+    @staticmethod
+    def get_attrs_to_table_name_map():
+        if not User._USER_ATTRIBUTES_TO_DB_TABLE:
+            query = User._USER_ATTRIBUTES_TO_DB_TABLE_QUERY % (User._USER_ATTRIBUTES_TO_DB_TABLE_TABLE_NAME)
+            results = DBUtil.get_result_as_dicts()
+            for result in results:
+                attr = result[User._ATTRIBUTE_NAME_COLUMN]
+                table = result[User._TABLE_NAME_COLUMN]
+                User._USER_ATTRIBUTES_TO_DB_TABLE[attr] = table
+        return User._USER_ATTRIBUTES_TO_DB_TABLE
+
+    @staticmethod 
     def get_user(unique_attr, unique_attr_value):
         """
         This unique attr can be email id or user id.
@@ -60,6 +82,8 @@ class User():
         pass
 
     def get_all_attributes():
+        if not self._attr_to_value:
+            User.get_attrs_to_table_name_map()
         return self._attr_to_value
     pass
 
