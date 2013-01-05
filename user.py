@@ -81,15 +81,15 @@ class User():
         return self._attr_to_value[attr_name]
         pass
 
-    def get_all_attributes():
+    def get_all_attributes(self):
         if not self._attr_to_value:
-            User.get_attrs_to_table_name_map()
+            
         return self._attr_to_value
     pass
 
     def _load_attrs_from_db(self):
         ## fill up the dict self._attr_to_value from database. 
-
+        User.get_attrs_to_table_name_map()
     def search_user(attr_name_to_value_map, search_options):
         ##Lets not worry about this now.
         pass
